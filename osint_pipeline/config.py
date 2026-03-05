@@ -35,7 +35,7 @@ SOURCE_TIERS = {
     # Tier 5: <30%
     "unverified_social":      {"tier": 5, "weight": 0.20},
 
-    # User intelligence: received as UNVERIFIED, upgraded on confirmation
+    # User intelligence
     "user_intel":             {"tier": None, "weight": None},
 }
 
@@ -78,10 +78,10 @@ PROTOCOL_THRESHOLDS = {
 CLAIM_LABELS = {
     "CONFIRMED":                   "Two or more independent credible sources",
     "PROBABLE":                    "Single credible source + corroborating circumstantial evidence",
-    "UNVERIFIED":                  "Single source or user-provided; not yet cross-referenced",
+    "UNVERIFIED":                  "Single source; not yet cross-referenced",
     "SPECULATIVE":                 "Analytical inference; no direct sourcing",
     "CONTRADICTED":                "Claim conflicts with available evidence",
-    "INTERESTED_PARTY_UNVERIFIED": "Claim from source with direct stake; requires independent corroboration",
+    "INTERESTED_PARTY_UNVERIFIED": "Claim from source with direct stake; requires corroboration",
 }
 
 # ─── DATABASE PATH ───────────────────────────────────────────────────────────
@@ -93,5 +93,5 @@ DB_PATH = "osint_pipeline.db"
 BRIEF_SCHEDULE = {
     "morning": {"start": "08:00", "end": "09:00"},
     "evening": {"start": "18:00", "end": "21:00"},
-    "flash":   {"start": None,    "end": None},
+    "flash":   {"start": None, "end": None},
 }
