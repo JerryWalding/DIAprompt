@@ -65,7 +65,7 @@ THEATERS = [
     "OPPORTUNISTIC",
 ]
 
-# ─── PROTOCOL THRESHOLDS ───────────────────────────��────────────────────────
+# ─── PROTOCOL THRESHOLDS ────────────────────────────────────────────────────
 
 PROTOCOL_THRESHOLDS = {
     "silence_trigger_hours": 12,
@@ -78,7 +78,7 @@ PROTOCOL_THRESHOLDS = {
 CLAIM_LABELS = {
     "CONFIRMED":                   "Two or more independent credible sources",
     "PROBABLE":                    "Single credible source + corroborating circumstantial evidence",
-    "UNVERIFIED":                  "Single source or user-provided; not yet cross-referenced",
+    "UNVERIFIED":                  "Single source; not yet cross-referenced",
     "SPECULATIVE":                 "Analytical inference; no direct sourcing",
     "CONTRADICTED":                "Claim conflicts with available evidence",
     "INTERESTED_PARTY_UNVERIFIED": "Claim from source with direct stake; requires independent corroboration",
