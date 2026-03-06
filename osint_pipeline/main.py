@@ -61,6 +61,29 @@ def main():
 
     if args.command == "brief":
         gen = BriefGenerator()
+
+# TODO: replace this with real aggregated + articles when the pipeline is wired
+    aggregated = [
+        {"location": "UKRAINE", "status": "ALERT", "total_score": 0.9},
+        {"location": "MIDDLE_EAST", "status": "WATCH", "total_score": 0.7},
+    ]
+    articles = [
+        {
+            "source": "reuters",
+            "title": "Heavy fighting reported in eastern Ukraine",
+            "summary": "Clashes intensified near key frontline towns.",
+            "url": "https://example.com/ukraine1",
+            "confidence_label": "PROBABLE",
+        },
+        {
+            "source": "bbc",
+            "title": "Tensions rise in Middle East region",
+            "summary": "Regional actors mobilize forces along border.",
+            "url": "https://example.com/me1",
+            "confidence_label": "UNVERIFIED",
+        },
+    ]
+        
         brief = gen.generate(brief_type=args.type, theater=args.theater)
         print(brief)
 
