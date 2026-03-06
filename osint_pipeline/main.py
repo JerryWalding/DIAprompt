@@ -84,8 +84,9 @@ def main():
         },
     ]
         
-        brief = gen.generate(brief_type=args.type, theater=args.theater)
-        print(brief)
+    brief_obj = gen.generate(aggregated, articles, run_id=None)
+    brief_text = gen.to_text(brief_obj)
+    print(brief_text)
 
     elif args.command == "scrape":
         sources = args.sources.split(",") if args.sources != "all" else None
