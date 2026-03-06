@@ -8,6 +8,7 @@ UNCLASSIFIED // OPEN SOURCE INTELLIGENCE — INDEPENDENT ANALYSIS
 import argparse
 import sys
 from database.db import init_db
+from database.db import get_recent_articles
 from scraper.rss_scraper import RssScraper
 from scraper.web_scraper import WebScraper
 from brief.generator import BriefGenerator
