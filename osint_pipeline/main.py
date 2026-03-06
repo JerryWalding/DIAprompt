@@ -61,29 +61,53 @@ def main():
 
     if args.command == "brief":
         gen = BriefGenerator()
+        evaluator = SourceEvaluator()
 
-    # TODO: replace this with real aggregated + articles when the pipeline is wired
-        aggregated = [
-            {"location": "UKRAINE", "status": "ALERT", "total_score": 0.9},
-            {"location": "MIDDLE_EAST", "status": "WATCH", "total_score": 0.7},
-        ]
-        articles = [
-            {
-                "source": "reuters",
-                "title": "Heavy fighting reported in eastern Ukraine",
-                "summary": "Clashes intensified near key frontline towns.",
-                "url": "https://example.com/ukraine1",
-                "confidence_label": "PROBABLE",
-            },
-            {
-                "source": "bbc",
-                "title": "Tensions rise in Middle East region",
-                "summary": "Regional actors mobilize forces along border.",
-                "url": "https://example.com/me1",
-                "confidence_label": "UNVERIFIED",
-            },
-        ]
-        
+        # 1. Get recent articles from DB (last 24 hours)
+        articles = get_recent_articles(hours=24)
+
+        if not articles:
+            print("[BRIEF] No recent articles found. Run 'scrape' first.")
+            return
+
+        # 2. Evaluate credibility
+        articles = evaluator.evaluate_batch(articles)
+
+        # 3. Aggregate by location/status
+        aggregated = []
+        by_location = {}
+
+        for a in articles:
+            text = (a.get("title", "") + " " + a.get("summary", "")).lower()
+
+            if "ukraine" in text:
+                loc = "UKRAINE"
+            elif any(k in text for k in ["gaza", "israel", "iran"]):
+                loc = "MIDDLE_EAST"
+            else:
+                loc = "OPPORTUNISTIC"
+
+            score = a.get("credibility_score", a.get("weight", 0.2))
+
+            if loc not in by_location:
+                by_location[loc] = {
+                    "location": loc,
+                    "status": "NOMINAL",
+                    "total_score": 0.0,
+                    "article_count": 0,
+                }
+
+            by_location[loc]["total_score"] += score
+            by_location[loc]["article_count"] += 1
+
+        for loc, data in by_location.items():
+            if data["total_score"] > 5:
+                data["status"] = "ALERT"
+            elif data["total_score"] > 2:
+                data["status"] = "WATCH"
+            aggregated.append(data)
+
+        # 4. Generate and print the brief
         brief_obj = gen.generate(aggregated, articles, run_id=None)
         brief_text = gen.to_text(brief_obj)
         print(brief_text)
