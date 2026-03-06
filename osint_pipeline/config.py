@@ -88,6 +88,11 @@ CLAIM_LABELS = {
 
 DB_PATH = "osint_pipeline.db"
 
+# ─── DATABASE URL ────────────────────────────────────────────────────────────
+
+# SQLite URL constructed from DB_PATH
+DATABASE_URL = f"sqlite:///{DB_PATH}"
+
 # ─── BRIEF SCHEDULE (EST) ────────────────────────────────────────────────────
 
 BRIEF_SCHEDULE = {
