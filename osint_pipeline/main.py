@@ -21,7 +21,7 @@ def parse_args():
     subparsers = parser.add_subparsers(dest="command")
 
     # Init DB
-    subparsers.add_parser("--init-db", help="Initialize the SQLite database")
+    subparsers.add_parser("init-db", help="Initialize the SQLite database")
 
     # Brief generation
     brief_parser = subparsers.add_parser("brief", help="Generate a brief")
@@ -53,7 +53,7 @@ def parse_args():
 def main():
     args = parse_args()
 
-    if args.command == "--init-db" or args.command is None:
+    if args.command == "init-db" or args.command is None:
         print("[INIT] Initializing OSINT Pipeline database...")
         init_db()
         print("[INIT] Database initialized successfully.")
